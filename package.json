@@ -1,0 +1,24 @@
+{
+  "name": "jhh-site",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173 --strictPort",
+    "verify": "node tests/verify.mjs"
+  },
+  "dependencies": {
+    "@fontsource/bai-jamjuree": "^5.2.5",
+    "@fontsource/chonburi": "^5.2.5",
+    "@fontsource/cinzel": "^5.2.5",
+    "@fontsource/noto-serif-tc": "^5.2.5",
+    "gsap": "^3.13.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0"
+  }
+}

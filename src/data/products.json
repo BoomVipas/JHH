@@ -1,0 +1,38 @@
+{
+  "brand": {
+    "th": "จิงเฮียงฮั้ง",
+    "hanzi": "金香行",
+    "hanziNote": "placeholder transliteration — confirm with family before production",
+    "en": "Jing Hiang Hung",
+    "caption": "Heavenly Offerings for the Ancestors",
+    "company": "บริษัท จิงเฮียงฮั้ง จำกัด"
+  },
+  "products": [
+    { "id": "p01", "num": "I", "tier": "scene", "nameTh": "กิมฮวยร่ำรวยลูกไหม", "specTh": "รหัส 222 · ลังละ 20 คู่", "promoTh": "โปรซื้อ 2 ลัง แถม 1 ลัง", "nameEn": "Golden Blossoms of Fortune", "theme": "golden shrine dais bathed in sunrise light breaking through sacred clouds", "accent": "#e8b84b", "video": true },
+    { "id": "p02", "num": "II", "tier": "scene", "nameTh": "กุ่ยนั่งฮู้ใหญ่ (5 สี)", "specTh": "แผ่นใหญ่ · ครบ 5 สี", "promoTh": "สินค้าใหม่", "nameEn": "The Noble Benefactor Talisman", "theme": "vermilion silk drapes with floating golden seals and slow-drifting incense", "accent": "#c8322b" },
+    { "id": "p03", "num": "III", "tier": "scene", "nameTh": "เทียนหอม 3 มิติ 2 ตำลึง", "specTh": "แพ็ค 5 คู่", "promoTh": "", "nameEn": "Scented Ritual Candles · Twin Pack", "theme": "crimson altar in warm candle-glow, curls of incense smoke rising", "accent": "#a61b1b" },
+    { "id": "p04", "num": "IV", "tier": "scene", "nameTh": "เทียนหอม 3 มิติ 3 ตำลึง ขาไม้", "specTh": "ขาไม้ปักแท่น", "promoTh": "", "nameEn": "Grand Candles on Wooden Stakes", "theme": "twilight temple courtyard with red lantern bokeh and indigo dusk sky", "accent": "#7a2440" },
+    { "id": "p05", "num": "V", "tier": "scene", "nameTh": "รองเท้าแตะ Adidas", "specTh": "จุ 40 คู่", "promoTh": "", "nameEn": "Paper Slides · Sport", "theme": "jade cloud terrace in cool morning mist, soft green-gold light", "accent": "#3f7d5d" },
+    { "id": "p06", "num": "VI", "tier": "scene", "nameTh": "รองเท้าแตะ Gucci", "specTh": "จุ 40 คู่", "promoTh": "", "nameEn": "Paper Slides · Luxury", "theme": "emerald silk landscape with golden coins drifting like petals", "accent": "#2e6e4e" },
+    { "id": "p07", "num": "VII", "tier": "scene", "nameTh": "รองเท้าคัทชูหญิง หลุยส์มรกต · Chanel", "specTh": "หนังจระเข้ครีม", "promoTh": "", "nameEn": "Ladies' Court Shoes · Emerald & Cream", "theme": "ivory silk boudoir among pearl-white clouds, soft opal light", "accent": "#d9c6a5" },
+    { "id": "p08", "num": "VIII", "tier": "scene", "nameTh": "A501 เสื้อโปโลชายนำสมัย", "specTh": "จุ 40 กล่อง", "promoTh": "", "nameEn": "Gentlemen's Paper Shirts · Dragon", "theme": "imperial dragon hall with red-gold silk banners and carved pillars", "accent": "#8f1f1f" },
+    { "id": "p09", "num": "IX", "tier": "scene", "nameTh": "ธูปมังกร 7 สี", "specTh": "เบอร์ 1–6 · สูงถึง 220 ซม.", "promoTh": "เข้าทุกไซส์ สั่งได้เลย", "nameEn": "Dragon Incense · Seven Colours", "theme": "amber dawn sky with a coiling dragon of incense smoke", "accent": "#c47a1d" },
+    { "id": "p10", "num": "X", "tier": "scene", "nameTh": "อั่งติ้ว ม้า นกกระเรียน", "specTh": "織花紅幼絲", "promoTh": "สินค้าใหม่", "nameEn": "Red Silk Blessing Strips", "theme": "scarlet festival wall with hanging red silk ribbons and gold tassels", "accent": "#b3242a" },
+    { "id": "p11", "num": "XI", "tier": "scene", "nameTh": "เทียนไร้ควัน", "specTh": "1–7 วัน · แดง / เหลือง", "promoTh": "", "nameEn": "Smokeless Vigil Candles", "theme": "serene night shrine, golden flames reflected on dark lacquer water", "accent": "#1d1a2e" },
+    { "id": "p12", "num": "XII", "tier": "scene", "nameTh": "กิมฮวยร่ำรวยลูกไหมใหญ่", "specTh": "รหัส 777", "promoTh": "", "nameEn": "Grand Golden Blossoms", "theme": "celestial peacock garden with iridescent violet-gold clouds", "accent": "#6d4a8f" },
+    { "id": "p13", "num": "XIII", "tier": "wall", "nameTh": "กิมฮวยเจียวใช้ ลูกไหมใหญ่", "specTh": "คู่ใหญ่", "promoTh": "", "nameEn": "Kim Huay Jiao Chai", "theme": "soft heavenly clouds with warm gold light", "accent": "#b98a2e" },
+    { "id": "p14", "num": "XIV", "tier": "wall", "nameTh": "A502 เสื้อลูกไม้หญิง", "specTh": "กล่องของขวัญ", "promoTh": "", "nameEn": "Ladies' Lace Blouse", "theme": "soft heavenly clouds with warm gold light", "accent": "#b3555f" },
+    { "id": "p15", "num": "XV", "tier": "wall", "nameTh": "A286 เสื้อโปโลชาย + กางเกงยีนส์", "specTh": "บรรจุ 100 ถุง", "promoTh": "", "nameEn": "Polo & Jeans Set", "theme": "soft heavenly clouds with warm gold light", "accent": "#5e5286" },
+    { "id": "p16", "num": "XVI", "tier": "wall", "nameTh": "ชุดเสื้อเชิ้ต + เนคไท A888", "specTh": "พร้อมนาฬิกา · มือถือ · ทองแท่ง", "promoTh": "", "nameEn": "Shirt & Tie Gift Set", "theme": "soft heavenly clouds with warm gold light", "accent": "#7d8fa6" },
+    { "id": "p17", "num": "XVII", "tier": "wall", "nameTh": "รองเท้าคัทชูผู้ชาย", "specTh": "ออกใหม่", "promoTh": "", "nameEn": "Gentlemen's Loafers", "theme": "soft heavenly clouds with warm gold light", "accent": "#8a6a45" },
+    { "id": "p18", "num": "XVIII", "tier": "wall", "nameTh": "คนรับใช้กงเต๊ก", "specTh": "D127 ใหญ่ 50 ซม. · D126 เล็ก 36 ซม.", "promoTh": "", "nameEn": "Attendant Figures", "theme": "soft heavenly clouds with warm gold light", "accent": "#4d6a8f" },
+    { "id": "p19", "num": "XIX", "tier": "wall", "nameTh": "แบงค์กงเต๊ก ซุปเปอร์จัมโบ้", "specTh": "รหัส 272 · ลังละ 90 ห่อ · มีหลายรุ่น", "promoTh": "สอบถามได้พร้อมโปร", "nameEn": "Jumbo Heaven Notes", "theme": "soft heavenly clouds with warm gold light", "accent": "#9d7a2f" },
+    { "id": "p20", "num": "XX", "tier": "wall", "nameTh": "ธูปตะเกียบ ตรากวนอิม", "specTh": "ขนาด 49 ซม.", "promoTh": "", "nameEn": "Guan Yin Chopstick Incense", "theme": "soft heavenly clouds with warm gold light", "accent": "#a8842f" },
+    { "id": "p21", "num": "XXI", "tier": "wall", "nameTh": "ธูปใช่ซิ้ง 5 ดอก", "specTh": "ขนาด 24 ซม.", "promoTh": "", "nameEn": "Chai Sing Incense · Five", "theme": "soft heavenly clouds with warm gold light", "accent": "#c04f78" },
+    { "id": "p22", "num": "XXII", "tier": "wall", "nameTh": "ธูปไม้จันทน์", "specTh": "32 · 28 · 20 ซม. บรรจุ 45 ห่อ", "promoTh": "", "nameEn": "Sandalwood Incense", "theme": "soft heavenly clouds with warm gold light", "accent": "#8f5a2e" },
+    { "id": "p23", "num": "XXIII", "tier": "wall", "nameTh": "ธูปสับปะรด ตราภูเขา", "specTh": "หลายขนาด", "promoTh": "สินค้าใหม่", "nameEn": "Pineapple Incense", "theme": "soft heavenly clouds with warm gold light", "accent": "#b8932a" },
+    { "id": "p24", "num": "XXIV", "tier": "wall", "nameTh": "อวงมึ้ง (ตุ๊มๆ ต่อมๆ)", "specTh": "พวงแขวนทอง", "promoTh": "", "nameEn": "Golden Hanging Garland", "theme": "soft heavenly clouds with warm gold light", "accent": "#c2842a" },
+    { "id": "p25", "num": "XXV", "tier": "wall", "nameTh": "เทียนดอกบัวทอง No.1", "specTh": "บรรจุ 80 คู่", "promoTh": "", "nameEn": "Golden Lotus Candles", "theme": "soft heavenly clouds with warm gold light", "accent": "#c8322b" },
+    { "id": "p26", "num": "XXVI", "tier": "wall", "nameTh": "เทียนแดงอวยพร โชคลาภ", "specTh": "2–5 ตำลึง", "promoTh": "", "nameEn": "Red Blessing Candles", "theme": "soft heavenly clouds with warm gold light", "accent": "#b02430" }
+  ]
+}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>จิงเฮียงฮั้ง 金香行 · เครื่องกระดาษไหว้บรรพบุรุษ</title>
+  <meta name="description" content="แคตตาล็อกเครื่องกระดาษกงเต๊ก จิงเฮียงฮั้ง (POC)" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🏮</text></svg>" />
+</head>
+<body>
+  <!-- Preloader (outside smooth wrapper: fixed) -->
+  <div id="preloader" aria-hidden="true">
+    <div class="preloader__panel preloader__panel--top"></div>
+    <div class="preloader__panel preloader__panel--bottom"></div>
+    <div class="preloader__core">
+      <p class="preloader__hanzi" lang="zh">金香行</p>
+      <p class="preloader__brand">จิงเฮียงฮั้ง</p>
+      <div class="preloader__bar"><span id="preloaderFill"></span></div>
+      <p class="preloader__pct" id="preloaderPct">0</p>
+    </div>
+  </div>
+
+  <!-- Fixed chrome -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#hero" data-scrollto="#hero">
+      <span class="nav__hanzi" lang="zh">金香行</span>
+      <span class="nav__name">จิงเฮียงฮั้ง</span>
+    </a>
+    <a class="btn btn--gold nav__cta" href="#finale" data-scrollto="#finale">สั่งซื้อ / สอบถาม</a>
+  </header>
+
+  <nav class="rail" id="rail" aria-label="สินค้าแนะนำ"></nav>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div id="smooth-wrapper">
+    <main id="smooth-content">
+
+      <!-- ACT 1 · Hero + half wheel -->
+      <section class="hero" id="hero">
+        <div class="hero__sky" aria-hidden="true">
+          <div class="hero__cloud hero__cloud--a"></div>
+          <div class="hero__cloud hero__cloud--b"></div>
+          <div class="hero__cloud hero__cloud--c"></div>
+        </div>
+        <div class="hero__bank" aria-hidden="true"><img src="/media/frames/hero/f_0001.webp" alt="" /></div>
+        <div class="hero__lockup" data-speed="0.92">
+          <p class="hero__hanzi" lang="zh" id="heroHanzi">金香行</p>
+          <h1 class="hero__name" id="heroName">จิงเฮียงฮั้ง</h1>
+          <p class="hero__caption" id="heroCaption">
+            <span lang="th">เครื่องกระดาษไหว้บรรพบุรุษ ครบทุกความคิดถึง</span>
+            <span class="hero__caption-en" lang="en">Heavenly Offerings</span>
+          </p>
+        </div>
+        <div class="wheel wheel--half" id="heroWheel" role="listbox" aria-label="แคตตาล็อกสินค้า" tabindex="0">
+          <div class="wheel__disc" id="heroDisc"></div>
+        </div>
+        <p class="wheel__cardname" id="wheelCardName" aria-live="polite"></p>
+      </section>
+
+      <!-- ACT 2 · Cloud scrub -->
+      <section class="ascent" id="ascent">
+        <div class="ascent__stage" id="ascentStage">
+          <canvas id="ascentCanvas" aria-label="ภาพเคลื่อนไหวทะเลเมฆทอง"></canvas>
+          <div class="ascent__veil ascent__veil--top" aria-hidden="true"></div>
+          <div class="ascent__veil ascent__veil--bottom" aria-hidden="true"></div>
+          <div class="ascent__waypoint" data-wp="0">
+            <p class="ascent__th" lang="th">จากมือ สู่ไฟ จากไฟ สู่ฟ้า</p>
+            <p class="ascent__en" lang="en">From hand, through flame, to heaven</p>
+          </div>
+          <div class="ascent__waypoint" data-wp="1">
+            <p class="ascent__th" lang="th">ทุกชิ้นงานกระดาษ คือความคิดถึงที่จับต้องได้</p>
+            <p class="ascent__en" lang="en">Every fold of paper carries remembrance</p>
+          </div>
+          <div class="ascent__waypoint" data-wp="2">
+            <p class="ascent__th" lang="th">ให้ของที่ดีที่สุด เดินทางไปถึงท่าน</p>
+            <p class="ascent__en" lang="en">Only the finest, sent onward</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACT 3 · Signature catalogue (12 pinned scenes, built from data) -->
+      <section class="catalogue" id="catalogue">
+        <div class="catalogue__stage" id="catalogueStage"></div>
+      </section>
+
+      <!-- ACT 4 · Collection wall -->
+      <section class="wall" id="wall">
+        <div class="wall__head">
+          <h2 class="wall__title" lang="th">คอลเลกชันทั้งหมด</h2>
+          <p class="wall__sub">
+            <span lang="th">อีกหลากหลายรายการจากคลังของเรา พร้อมส่งถึงทุกพิธี</span>
+            <span class="wall__sub-en" lang="en">The Full Collection</span>
+          </p>
+        </div>
+        <div class="wall__grid" id="wallGrid"></div>
+      </section>
+
+      <!-- ACT 5 · Finale -->
+      <section class="finale" id="finale">
+        <div class="wheel wheel--full" id="finaleWheel" aria-hidden="true">
+          <div class="wheel__disc" id="finaleDisc"></div>
+        </div>
+        <div class="finale__core">
+          <p class="finale__hanzi" lang="zh">招財進寶 · 保佑平安</p>
+          <h2 class="finale__title" lang="th">ให้เราช่วยส่งความคิดถึงของคุณ</h2>
+          <p class="finale__sub" lang="th">สั่งซื้อยกลัง หรือสอบถามรายการสินค้าได้ทุกวัน</p>
+          <a class="btn btn--gold finale__cta" href="#" id="finaleCta">สั่งซื้อ / สอบถาม</a>
+          <p class="finale__contact" lang="th">LINE OA · โทรศัพท์ · หน้าร้าน (ข้อมูลติดต่อจะใส่ในเวอร์ชันจริง)</p>
+        </div>
+        <footer class="footer">
+          <p class="footer__brand">จิงเฮียงฮั้ง <span lang="zh">金香行</span> · บริษัท จิงเฮียงฮั้ง จำกัด</p>
+          <p class="footer__note" lang="th">หน้าเดโมแนวคิด · ภาพสินค้าเรนเดอร์ใหม่ด้วย AI จากภาพถ่ายสินค้าจริงของร้าน</p>
+        </footer>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
