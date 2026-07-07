@@ -25,11 +25,14 @@ export const GLIDE = {
   CRUISE: 1700,
   /** px soft-landing zone before each stop; 0 = dead-constant stop */
   ARRIVE: 240,
-  /** ms of wheel silence that ends a swipe (trackpad inertia grouping) */
+  /** ms of wheel silence that ends a gesture */
   GESTURE_GAP: 240,
-  /** during inertia decay, a wheel delta this × above the decayed floor
-   *  counts as a NEW deliberate swipe (queues one more page) */
-  RISE_FACTOR: 2.4,
+  /** the first impulse of a gesture pages immediately; every additional
+   *  PAGE_CHARGE px of wheel input queues one more page — this is how
+   *  "excess speed becomes extra travel time" */
+  PAGE_CHARGE: 1100,
+  /** never queue further than this many pages beyond the current position */
+  MAX_AHEAD: 3,
   /** wheel deltas below this are ignored as noise */
   MIN_DELTA: 10,
   /** px of finger travel that counts as a page swipe on release */
@@ -52,9 +55,7 @@ class GlidePager {
   // wheel gesture state
   private inGesture = false;
   private gestureDir = 0;
-  private peak = 0;
-  private floor = 0;
-  private decaying = false;
+  private charge = 0;
   private gestureTimer = 0;
 
   // touch state
@@ -113,11 +114,13 @@ class GlidePager {
   /** advance the queue by one page in `dir`; excess speed = more time, not more speed */
   private pageBy(dir: number): void {
     this.refreshStops();
-    const base = this.traveling() && this.holdAt === null
-      ? this.targetIdx
-      : this.nearestIdx(this.current);
+    const near = this.nearestIdx(this.current);
+    const base = this.traveling() && this.holdAt === null ? this.targetIdx : near;
     this.holdAt = null;
-    this.targetIdx = Math.max(0, Math.min(this.stops.length - 1, base + dir));
+    const next = Math.max(0, Math.min(this.stops.length - 1, base + dir));
+    // never queue too far beyond where the page actually is
+    if (Math.abs(next - near) > GLIDE.MAX_AHEAD) return;
+    this.targetIdx = next;
   }
 
   private interruptJump(): void {
@@ -131,7 +134,8 @@ class GlidePager {
     }
   }
 
-  // ── wheel: group event streams into swipes, one page per swipe ──
+  // ── wheel: first impulse pages immediately; accumulated input charges
+  //    additional pages (excess speed → more travel time, never more speed) ──
   private onWheel = (e: WheelEvent): void => {
     if (e.ctrlKey) return; // pinch-zoom stays native
     e.preventDefault(); // the pager owns vertical scrolling
@@ -142,26 +146,16 @@ class GlidePager {
     this.interruptJump();
     const dir = d > 0 ? 1 : -1;
 
-    const startSwipe = () => {
+    if (!this.inGesture || dir !== this.gestureDir) {
       this.inGesture = true;
       this.gestureDir = dir;
-      this.peak = abs;
-      this.floor = abs;
-      this.decaying = false;
-      this.pageBy(dir);
-    };
-
-    if (!this.inGesture || dir !== this.gestureDir) {
-      startSwipe();
-    } else if (!this.decaying && abs >= this.peak) {
-      this.peak = abs; // still accelerating within the same swipe
+      this.charge = 0;
+      this.pageBy(dir); // instant response on the first impulse
     } else {
-      // inertia tail: deltas decay; a sharp rise above the floor = a new swipe
-      this.decaying = true;
-      if (abs > this.floor * GLIDE.RISE_FACTOR && abs > GLIDE.MIN_DELTA * 3) {
-        startSwipe();
-      } else {
-        this.floor = Math.min(this.floor, abs);
+      this.charge += abs;
+      while (this.charge >= GLIDE.PAGE_CHARGE) {
+        this.charge -= GLIDE.PAGE_CHARGE;
+        this.pageBy(dir);
       }
     }
 

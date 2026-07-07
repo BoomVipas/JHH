@@ -89,16 +89,15 @@ async function boot(): Promise<void> {
     return stops;
   });
 
-  // Gate the reveal only on what's actually visible at first paint: fonts,
-  // the first scene background, and the few cards the half-wheel shows first.
-  // Hero frame 0 is already painted by the static <img> in index.html, and
-  // the scrubber streams the remaining frames during idle time.
+  // Gate the reveal on everything the hero shows (all 26 wheel cards) plus
+  // the first two scene backgrounds. Hero frame 0 is already painted by the
+  // static <img> in index.html; the scrubber streams remaining frames.
   const critical = [
-    ...products.slice(0, 6).map((p) => media.card(p)),
+    ...products.map((p) => media.card(p)),
     media.scene(scenes[0]),
+    media.scene(scenes[1]),
   ];
-  await runPreloader(critical);
-  ScrollTrigger.refresh(); // final re-measure with fonts + first assets settled
+  await runPreloader(critical, () => ScrollTrigger.refresh());
   playIntro(heroWheel);
 
   window.addEventListener('load', () => ScrollTrigger.refresh());

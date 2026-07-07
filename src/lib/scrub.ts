@@ -157,12 +157,11 @@ export async function initScrub(): Promise<void> {
     frame: count - 1,
     ease: 'none',
     scrollTrigger: {
+      // the stage is position:sticky, so no GSAP pin (and no layout shifts)
       trigger: '#ascent',
       start: 'top top',
-      end: '+=260%',
-      pin: '#ascentStage',
+      end: 'bottom bottom',
       scrub: 0.5,
-      anticipatePin: 1,
     },
     onUpdate: () => {
       desired = Math.round(target.frame);
@@ -188,7 +187,7 @@ export async function initScrub(): Promise<void> {
       scrollTrigger: {
         trigger: '#ascent',
         start: 'top top',
-        end: '+=260%',
+        end: 'bottom bottom',
         scrub: 0.5,
       },
     })

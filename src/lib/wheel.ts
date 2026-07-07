@@ -48,7 +48,6 @@ export class Wheel {
       const img = document.createElement('img');
       img.src = media.card(p);
       img.alt = '';
-      img.loading = 'lazy';
       img.draggable = false;
       card.appendChild(img);
       frag.appendChild(card);

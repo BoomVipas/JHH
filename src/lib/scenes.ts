@@ -13,7 +13,6 @@ function sceneDom(p: Product, i: number): HTMLElement {
   img.className = 'scene__bg';
   img.src = media.scene(p);
   img.alt = `${p.nameTh} ในฉากสวรรค์`;
-  img.loading = i === 0 ? 'eager' : 'lazy';
   el.appendChild(img);
 
   const scrim = document.createElement('div');
@@ -122,12 +121,12 @@ export function initScenes(): void {
   const tl = gsap.timeline({
     defaults: { ease: 'none' },
     scrollTrigger: {
+      // the stage is position:sticky (section height carries the travel),
+      // so no GSAP pin and no layout shifts at the boundaries
       trigger: '#catalogue',
       start: 'top top',
-      end: `+=${n * 90}%`,
-      pin: '#catalogueStage',
+      end: 'bottom bottom',
       scrub: 0.6,
-      anticipatePin: 1,
       onUpdate(self) {
         const idx = Math.min(n - 1, Math.floor(self.progress * n));
         setRail(idx);
@@ -145,11 +144,12 @@ export function initScenes(): void {
     const at = i;
 
     if (i === 0) {
-      tl.set(el, { opacity: 1 }, 0);
+      tl.set(el, { autoAlpha: 1 }, 0);
       tl.fromTo(bg, { scale: 1.06 }, { scale: 1, duration: 1 }, 0);
       tl.fromTo(copyBits, { opacity: 0, x: 26 }, { opacity: 1, x: 0, duration: 0.22, stagger: 0.035 }, 0.02);
     } else {
-      tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.32 }, at - 0.16);
+      // autoAlpha (opacity + visibility) lets the compositor drop hidden scenes
+      tl.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.32 }, at - 0.16);
       tl.fromTo(
         bg,
         isCoarse
@@ -175,7 +175,7 @@ export function initScenes(): void {
       const next = i + 1;
       tl.to(el.querySelectorAll('.scene__copy > *'), { opacity: 0, x: dir * -30, duration: 0.16, stagger: 0.02 }, next - 0.2);
       if (!isCoarse) tl.to(bg, { filter: 'blur(4px)', duration: 0.3 }, next - 0.16);
-      tl.to(el, { opacity: 0, duration: 0.3 }, next - 0.1);
+      tl.to(el, { autoAlpha: 0, duration: 0.3 }, next - 0.1);
     }
   });
 

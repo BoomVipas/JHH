@@ -9,7 +9,7 @@ export function buildWall(): void {
     item.className = 'wall__item';
     item.id = `wall-${p.id}`;
     item.innerHTML = `
-      <div class="wall__imgwrap"><img src="${media.wall(p)}" alt="${p.nameTh}" loading="lazy" /></div>
+      <div class="wall__imgwrap"><img src="${media.wall(p)}" alt="${p.nameTh}" /></div>
       <p class="wall__num">${p.num} · ${p.nameEn}</p>
       <p class="wall__name" lang="th">${p.nameTh}</p>
       <p class="wall__spec" lang="th">${p.specTh}${p.promoTh ? ` · ${p.promoTh}` : ''}</p>

@@ -20,7 +20,7 @@ function loadImages(urls: string[], onOne: () => void): Promise<void> {
   });
 }
 
-export async function runPreloader(criticalImages: string[]): Promise<void> {
+export async function runPreloader(criticalImages: string[], beforeReveal?: () => void): Promise<void> {
   const fill = document.getElementById('preloaderFill')!;
   const pct = document.getElementById('preloaderPct')!;
   const total = criticalImages.length + 1; // +1 for fonts
@@ -41,6 +41,10 @@ export async function runPreloader(criticalImages: string[]): Promise<void> {
 
   fill.style.width = '100%';
   pct.textContent = '100';
+
+  // last re-measures (ScrollTrigger refresh etc.) happen behind the gate,
+  // where any resulting jump is invisible
+  beforeReveal?.();
 
   const preloader = document.getElementById('preloader')!;
   const tl = gsap.timeline();
