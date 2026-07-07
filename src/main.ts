@@ -57,14 +57,16 @@ async function boot(): Promise<void> {
 
   if (reducedMotion) {
     document.getElementById('nav')!.classList.add('is-ready');
-    void initScrub();
+    await initScrub();
     initScenes();
     initWall();
     return;
   }
 
   initGlide();
-  void initScrub();
+  // The ascent pin MUST exist before the catalogue pin is measured, or every
+  // scene position lands ~260vh too early and the catalogue tail shows blank.
+  await initScrub();
   initScenes();
   initWall();
   heroExit();
@@ -96,6 +98,7 @@ async function boot(): Promise<void> {
     media.scene(scenes[0]),
   ];
   await runPreloader(critical);
+  ScrollTrigger.refresh(); // final re-measure with fonts + first assets settled
   playIntro(heroWheel);
 
   window.addEventListener('load', () => ScrollTrigger.refresh());

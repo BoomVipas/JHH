@@ -4,11 +4,18 @@ import type { ScrollTrigger as ST } from 'gsap/ScrollTrigger';
 
 let ascentTrigger: ST | null = null;
 
-/** page stops through the pinned cloud video: start, the three story beats, end */
+/** progress spans of the three story waypoints across the pinned scroll */
+const spans: Array<[number, number]> = [[0.06, 0.30], [0.38, 0.62], [0.70, 0.94]];
+
+// Each waypoint is fully faded in at a + (b-a)*0.35 and starts fading out at
+// b - (b-a)*0.3, so its peak-visibility center sits at a + (b-a)*0.525.
+const stopFractions = [...spans.map(([a, b]) => a + (b - a) * 0.525), 1.0];
+
+/** page stops through the pinned cloud video: the three story beats, then the end */
 export function ascentStops(): number[] {
   if (!ascentTrigger) return [];
   const span = ascentTrigger.end - ascentTrigger.start;
-  return [0.0, 0.18, 0.5, 0.82, 1.0].map((p) => ascentTrigger!.start + span * p);
+  return stopFractions.map((p) => ascentTrigger!.start + span * p);
 }
 
 interface Manifest { count: number }
@@ -154,7 +161,7 @@ export async function initScrub(): Promise<void> {
       start: 'top top',
       end: '+=260%',
       pin: '#ascentStage',
-      scrub: 1,
+      scrub: 0.5,
       anticipatePin: 1,
     },
     onUpdate: () => {
@@ -166,7 +173,6 @@ export async function initScrub(): Promise<void> {
   ascentTrigger = scrubTween.scrollTrigger!;
 
   // story waypoints ride the same scroll span
-  const spans: Array<[number, number]> = [[0.06, 0.30], [0.38, 0.62], [0.70, 0.94]];
   document.querySelectorAll<HTMLElement>('.ascent__waypoint').forEach((wp, i) => {
     const [a, b] = spans[i];
     // Blur animated on scroll-scrub is cheap on desktop but a frame-killer on
@@ -183,7 +189,7 @@ export async function initScrub(): Promise<void> {
         trigger: '#ascent',
         start: 'top top',
         end: '+=260%',
-        scrub: 1,
+        scrub: 0.5,
       },
     })
       .to(wp, { opacity: 0, duration: a }, 0)

@@ -22,7 +22,7 @@ import { gsap } from 'gsap';
    ──────────────────────────────────────────────────────────────────────── */
 export const GLIDE = {
   /** px/s hard cap — the one constant travel speed of the page */
-  CRUISE: 2600,
+  CRUISE: 1700,
   /** px soft-landing zone before each stop; 0 = dead-constant stop */
   ARRIVE: 240,
   /** ms of wheel silence that ends a swipe (trackpad inertia grouping) */
