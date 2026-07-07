@@ -1,4 +1,4 @@
-import { gsap, reducedMotion } from './motion';
+import { gsap, reducedMotion, glide } from './motion';
 import { media } from './data';
 
 interface Manifest { count: number }
@@ -136,7 +136,7 @@ export async function initScrub(): Promise<void> {
   if (reducedMotion) return; // static first frame is enough
 
   const target = { frame: 0 };
-  gsap.to(target, {
+  const scrubTween = gsap.to(target, {
     frame: count - 1,
     ease: 'none',
     scrollTrigger: {
@@ -152,6 +152,14 @@ export async function initScrub(): Promise<void> {
       draw(desired);
     },
   });
+
+  // The constant-speed glide takes over ONLY across this pinned video span
+  // (plus a small approach buffer); the rest of the page scrolls natively.
+  const st = scrubTween.scrollTrigger!;
+  glide.setRangeProvider(() => [
+    st.start - window.innerHeight * 0.5,
+    st.end + window.innerHeight * 0.25,
+  ]);
 
   // story waypoints ride the same scroll span
   const spans: Array<[number, number]> = [[0.06, 0.30], [0.38, 0.62], [0.70, 0.94]];

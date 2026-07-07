@@ -15,6 +15,10 @@ import { gsap } from 'gsap';
    interruptible: swipe again and it keeps cruising, swipe the other way
    and it reverses instantly, touch the screen and it stops under your
    finger.
+
+   SCOPE: the engine only takes over inside the range provided via
+   setRangeProvider() (the video-scrub section). Everywhere else the
+   browser scrolls natively and the engine just keeps itself in sync.
    ──────────────────────────────────────────────────────────────────────── */
 export const GLIDE = {
   /** cruise speed of the page in px/s — bigger = travels faster */
@@ -40,6 +44,18 @@ class Glide {
   private lastTouchT = 0;
   private flickV = 0;
   private jumpTween: gsap.core.Tween | null = null;
+  private rangeProvider: (() => [number, number] | null) | null = null;
+
+  /** Restrict the takeover to a scroll range (e.g. the pinned video section).
+   *  Without a provider the engine never intercepts input. */
+  setRangeProvider(fn: () => [number, number] | null): void {
+    this.rangeProvider = fn;
+  }
+
+  private inRange(y: number): boolean {
+    const r = this.rangeProvider?.();
+    return r ? y >= r[0] && y <= r[1] : false;
+  }
 
   init(): void {
     this.target = this.current = this.applied = window.scrollY;
@@ -63,6 +79,7 @@ class Glide {
 
   private onWheel = (e: WheelEvent): void => {
     if (e.ctrlKey) return; // pinch-zoom stays native
+    if (!this.inRange(window.scrollY)) return; // outside the video: native scroll
     e.preventDefault();
     this.interruptJump();
     const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
@@ -71,6 +88,7 @@ class Glide {
 
   private onTouchStart = (e: TouchEvent): void => {
     this.interruptJump();
+    if (!this.inRange(window.scrollY)) return; // outside the video: native gesture
     this.touching = true;
     this.flickV = 0;
     this.lastTouchY = e.touches[0].clientY;
