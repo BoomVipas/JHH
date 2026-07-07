@@ -269,8 +269,10 @@ button { font: inherit; }
 
 /* ---------- ascent ---------- */
 .ascent { position: relative; }
-.ascent__stage { position: relative; height: 100dvh; overflow: clip; }
-#ascentCanvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* Promote the pinned stages to their own compositor layer so the pin transform
+   and canvas repaint don't force full-page recomposites while scrolling. */
+.ascent__stage { position: relative; height: 100dvh; overflow: clip; will-change: transform; }
+#ascentCanvas { position: absolute; inset: 0; width: 100%; height: 100%; will-change: transform; transform: translateZ(0); }
 .ascent__veil { position: absolute; left: 0; right: 0; height: 22vh; z-index: 2; pointer-events: none; }
 .ascent__veil--top { top: 0; background: linear-gradient(180deg, var(--lacquer-950), transparent); }
 .ascent__veil--bottom { bottom: 0; background: linear-gradient(0deg, var(--lacquer-950), transparent); }
@@ -294,12 +296,15 @@ button { font: inherit; }
 
 /* ---------- catalogue ---------- */
 .catalogue { position: relative; }
-.catalogue__stage { position: relative; height: 100dvh; overflow: clip; }
+.catalogue__stage { position: relative; height: 100dvh; overflow: clip; will-change: transform; }
 .scene { position: absolute; inset: 0; opacity: 0; }
 .scene__bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: 68% center;
-  will-change: transform, opacity, filter;
+  /* Ken Burns (transform) + cross-fade (opacity) run continuously; the brief
+     blur transition is desktop-only now, so it stays off the promotion hint to
+     avoid keeping every full-screen scene layer in GPU memory. */
+  will-change: transform, opacity;
 }
 .scene__scrim {
   position: absolute; inset: 0;

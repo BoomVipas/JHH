@@ -1,4 +1,4 @@
-import { gsap, ScrollTrigger, reducedMotion, smoother } from './motion';
+import { gsap, ScrollTrigger, reducedMotion, glide } from './motion';
 import { scenes, media, Product } from './data';
 
 let sceneTrigger: ScrollTrigger | null = null;
@@ -75,10 +75,10 @@ export function scrollToScene(i: number): void {
     return;
   }
   const y = sceneTrigger.start + (sceneTrigger.end - sceneTrigger.start) * sceneProgress(i);
-  if (smoother) {
-    gsap.to(smoother, { scrollTop: y, duration: 1.6, ease: 'power3.inOut' });
+  if (reducedMotion) {
+    window.scrollTo({ top: y });
   } else {
-    window.scrollTo({ top: y, behavior: 'smooth' });
+    glide.jumpTo(y, 1.6);
   }
 }
 
@@ -106,6 +106,10 @@ export function initScenes(): void {
     document.documentElement.classList.add('rm');
     return;
   }
+
+  // Scrubbed filter: blur() on full-screen background images is a frame-killer
+  // on phones. Coarse pointers get transform + opacity only.
+  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
 
   const n = scenes.length;
   const tl = gsap.timeline({
@@ -141,8 +145,12 @@ export function initScenes(): void {
       tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.32 }, at - 0.16);
       tl.fromTo(
         bg,
-        { scale: 1.09, xPercent: dir * 2.5, filter: 'blur(5px)' },
-        { scale: 1, xPercent: 0, filter: 'blur(0px)', duration: 0.55 },
+        isCoarse
+          ? { scale: 1.09, xPercent: dir * 2.5 }
+          : { scale: 1.09, xPercent: dir * 2.5, filter: 'blur(5px)' },
+        isCoarse
+          ? { scale: 1, xPercent: 0, duration: 0.55 }
+          : { scale: 1, xPercent: 0, filter: 'blur(0px)', duration: 0.55 },
         at - 0.16,
       );
       tl.fromTo(
@@ -159,7 +167,7 @@ export function initScenes(): void {
     if (i < n - 1) {
       const next = i + 1;
       tl.to(el.querySelectorAll('.scene__copy > *'), { opacity: 0, x: dir * -30, duration: 0.16, stagger: 0.02 }, next - 0.2);
-      tl.to(bg, { filter: 'blur(4px)', duration: 0.3 }, next - 0.16);
+      if (!isCoarse) tl.to(bg, { filter: 'blur(4px)', duration: 0.3 }, next - 0.16);
       tl.to(el, { opacity: 0, duration: 0.3 }, next - 0.1);
     }
   });

@@ -12,6 +12,7 @@ function loadImages(urls: string[], onOne: () => void): Promise<void> {
     };
     for (const url of urls) {
       const img = new Image();
+      img.decoding = 'async'; // keep webp decode off the main thread behind the veil
       img.onload = finish;
       img.onerror = finish;
       img.src = url;

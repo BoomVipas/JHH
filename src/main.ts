@@ -6,7 +6,7 @@ import '@fontsource/cinzel/500.css';
 import '@fontsource/noto-serif-tc/700.css';
 import './styles/main.css';
 
-import { reducedMotion, initSmoother, scrollToTarget, ScrollTrigger } from './lib/motion';
+import { reducedMotion, initGlide, scrollToTarget, ScrollTrigger } from './lib/motion';
 import { products, scenes, media } from './lib/data';
 import { runPreloader } from './lib/preloader';
 import { Wheel, activeLabel } from './lib/wheel';
@@ -24,7 +24,7 @@ function pickProduct(p: (typeof products)[number]): void {
 async function boot(): Promise<void> {
   if (reducedMotion) document.documentElement.classList.add('rm');
 
-  // Build data-driven DOM before the smoother measures the page
+  // Build data-driven DOM before ScrollTrigger measures the page
   buildScenes();
   buildWall();
 
@@ -63,16 +63,19 @@ async function boot(): Promise<void> {
     return;
   }
 
-  initSmoother();
+  initGlide();
   void initScrub();
   initScenes();
   initWall();
   heroExit();
 
+  // Gate the reveal only on what's actually visible at first paint: fonts,
+  // the first scene background, and the few cards the half-wheel shows first.
+  // Hero frame 0 is already painted by the static <img> in index.html, and
+  // the scrubber streams the remaining frames during idle time.
   const critical = [
-    ...products.map((p) => media.card(p)),
+    ...products.slice(0, 6).map((p) => media.card(p)),
     media.scene(scenes[0]),
-    ...Array.from({ length: 24 }, (_, i) => media.heroFrame(i)),
   ];
   await runPreloader(critical);
   playIntro(heroWheel);

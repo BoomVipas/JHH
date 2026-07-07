@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && mkdir -p dist/.vercel && cp .vercel-link.json dist/.vercel/project.json",
     "preview": "vite preview --port 4173 --strictPort",
     "verify": "node tests/verify.mjs"
   },
