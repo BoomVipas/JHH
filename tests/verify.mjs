@@ -132,6 +132,39 @@ async function desktopRun(browser) {
   ok('scrub canvas painted', canvasPainted);
   ok('progress rail appears in catalogue', railSeen);
 
+  // paged glide: one wheel gesture advances exactly one stop, speed hard-capped
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await settle(page, 900);
+  const paging = await page.evaluate(async () => {
+    const g = window.__glide;
+    if (!g) return { ok: false, why: 'no glide handle' };
+    const stops = g.debugStops();
+    let last = window.scrollY;
+    let lastT = performance.now();
+    let maxV = 0;
+    const t0 = lastT;
+    window.dispatchEvent(new WheelEvent('wheel', { deltaY: 1400, cancelable: true }));
+    await new Promise((resolve) => {
+      const tick = () => {
+        const n = performance.now();
+        // measure over >=90ms windows: single-frame estimates are dominated
+        // by scroll quantization noise, not real velocity
+        if (n - lastT >= 90) {
+          maxV = Math.max(maxV, Math.abs(window.scrollY - last) / ((n - lastT) / 1000));
+          last = window.scrollY;
+          lastT = n;
+        }
+        if (n - t0 < 2600) requestAnimationFrame(tick);
+        else resolve(null);
+      };
+      requestAnimationFrame(tick);
+    });
+    return { ok: Math.abs(window.scrollY - stops[1]) < 10, at: window.scrollY, stop1: stops[1], maxV: Math.round(maxV) };
+  });
+  ok('one wheel gesture pages to next stop', paging.ok === true, JSON.stringify(paging));
+  ok('travel speed hard-capped', typeof paging.maxV === 'number' && paging.maxV <= 2600 * 1.3, `maxV=${paging.maxV}`);
+  await page.screenshot({ path: path.join(shotsDir, 'd03-paged-stop1.png') });
+
   // frame manifest sanity
   const manifest = await page.evaluate(async () => (await (await fetch('/media/frames/hero/manifest.json')).json()).count);
   ok('frame manifest count > 100', manifest > 100, `count=${manifest}`);

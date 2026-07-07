@@ -69,6 +69,13 @@ function sceneProgress(i: number): number {
   return (i + 0.5) / scenes.length;
 }
 
+/** page stops: one per catalogue scene, at its fully-on-stage position */
+export function sceneStops(): number[] {
+  if (!sceneTrigger) return [];
+  const span = sceneTrigger.end - sceneTrigger.start;
+  return scenes.map((_, i) => sceneTrigger!.start + span * sceneProgress(i));
+}
+
 export function scrollToScene(i: number): void {
   if (!sceneTrigger) {
     document.getElementById('catalogue')?.scrollIntoView();

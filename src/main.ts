@@ -6,13 +6,13 @@ import '@fontsource/cinzel/500.css';
 import '@fontsource/noto-serif-tc/700.css';
 import './styles/main.css';
 
-import { reducedMotion, initGlide, scrollToTarget, ScrollTrigger } from './lib/motion';
+import { reducedMotion, initGlide, scrollToTarget, ScrollTrigger, glide } from './lib/motion';
 import { products, scenes, media } from './lib/data';
 import { runPreloader } from './lib/preloader';
 import { Wheel, activeLabel } from './lib/wheel';
 import { playIntro, heroExit } from './lib/intro';
-import { initScrub } from './lib/scrub';
-import { buildScenes, initScenes, scrollToScene, sceneIndexOf } from './lib/scenes';
+import { initScrub, ascentStops } from './lib/scrub';
+import { buildScenes, initScenes, scrollToScene, sceneIndexOf, sceneStops } from './lib/scenes';
 import { buildWall, initWall } from './lib/wall';
 
 function pickProduct(p: (typeof products)[number]): void {
@@ -68,6 +68,24 @@ async function boot(): Promise<void> {
   initScenes();
   initWall();
   heroExit();
+
+  // Page stops for the paged glide: hero, the cloud-video beats, every
+  // catalogue scene, the wall screen by screen, then the finale.
+  glide.setStopsProvider(() => {
+    const vh = window.innerHeight;
+    const max = document.documentElement.scrollHeight - vh;
+    const stops = [0, ...ascentStops(), ...sceneStops()];
+    const wall = document.getElementById('wall');
+    const finale = document.getElementById('finale');
+    if (wall && finale) {
+      const wallTop = wall.getBoundingClientRect().top + window.scrollY - 60;
+      const finaleTop = Math.min(finale.getBoundingClientRect().top + window.scrollY, max);
+      for (let y = wallTop; y < finaleTop - vh * 0.5; y += vh * 0.85) stops.push(y);
+      stops.push(finaleTop);
+    }
+    stops.push(max);
+    return stops;
+  });
 
   // Gate the reveal only on what's actually visible at first paint: fonts,
   // the first scene background, and the few cards the half-wheel shows first.

@@ -47,7 +47,7 @@ Scale (fluid): display `clamp(3.5rem, 8vw, 6rem)`; scene title `clamp(2.25rem, 4
 
 ## Motion
 
-- **Scroll = playhead**: GSAP ScrollTrigger scrub for the cloud canvas and scene timeline; ScrollSmoother ≈ 1.2.
+- **Scroll = playhead**: GSAP ScrollTrigger scrub for the cloud canvas and scene timeline. Scrolling itself is the paged glide engine (`src/lib/glide.ts`): a hard CRUISE speed cap, one gesture = one stop (hero → video beats → scenes → wall screens → finale); excess input queues travel time, never velocity.
 - **Wheel**: Draggable `type:"rotation"` + InertiaPlugin, snap 360/26, idle drift 0.25°/s; active card lifts 14px + gold glow.
 - Easings: UI `cubic-bezier(0.23, 1, 0.32, 1)` (strong ease-out); scene handoffs `cubic-bezier(0.77, 0, 0.175, 1)`; scrub is linear by definition.
 - Durations: press feedback 140ms, card hover 200ms, non-scrub reveals ≤ 600ms; SplitText hero reveal chars stagger 24ms.

@@ -1,5 +1,15 @@
-import { gsap, reducedMotion, glide } from './motion';
+import { gsap, reducedMotion } from './motion';
 import { media } from './data';
+import type { ScrollTrigger as ST } from 'gsap/ScrollTrigger';
+
+let ascentTrigger: ST | null = null;
+
+/** page stops through the pinned cloud video: start, the three story beats, end */
+export function ascentStops(): number[] {
+  if (!ascentTrigger) return [];
+  const span = ascentTrigger.end - ascentTrigger.start;
+  return [0.0, 0.18, 0.5, 0.82, 1.0].map((p) => ascentTrigger!.start + span * p);
+}
 
 interface Manifest { count: number }
 
@@ -153,13 +163,7 @@ export async function initScrub(): Promise<void> {
     },
   });
 
-  // The constant-speed glide takes over ONLY across this pinned video span
-  // (plus a small approach buffer); the rest of the page scrolls natively.
-  const st = scrubTween.scrollTrigger!;
-  glide.setRangeProvider(() => [
-    st.start - window.innerHeight * 0.5,
-    st.end + window.innerHeight * 0.25,
-  ]);
+  ascentTrigger = scrubTween.scrollTrigger!;
 
   // story waypoints ride the same scroll span
   const spans: Array<[number, number]> = [[0.06, 0.30], [0.38, 0.62], [0.70, 0.94]];
